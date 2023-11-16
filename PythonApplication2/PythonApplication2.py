@@ -54,7 +54,3 @@ def fit_polynomial(numbers, degree):
     polynomial_terms = [f"{coeff:.4f}x^{degree-i}" for i, coeff in enumerate(coeffs)]
     polynomial_str = " + ".join(polynomial_terms).replace('x^0', '').replace(' + -', ' - ')
     return polynomial_str
-
-if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
