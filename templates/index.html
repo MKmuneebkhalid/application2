@@ -31,7 +31,7 @@
       gap: 20px;
     }
 
-    input[type="text"] {
+    input[type="text"], input[type="file"] {
       padding: 10px;
       border: 1px solid #ddd;
       border-radius: 4px;
@@ -56,8 +56,9 @@
 <body>
   <div class="form-container">
     <h1>Enter Your Numbers</h1>
-    <form action="/result" method="post">
+    <form action="/result" method="post" enctype="multipart/form-data">
       <input type="text" name="numbers" placeholder="Enter numbers separated by commas">
+      <input type="file" name="file" accept=".txt">
       <input type="submit" value="Analyze">
     </form>
   </div>

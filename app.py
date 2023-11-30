@@ -1,6 +1,6 @@
 import os
-import numpy as np
 from flask import Flask, render_template, request
+import numpy as np
 
 app = Flask(__name__)
 
@@ -10,8 +10,13 @@ def index():
 
 @app.route('/result', methods=['POST'])
 def result():
-    input_numbers = request.form['numbers']
-    numbers_list = [float(n.strip()) for n in input_numbers.split(',') if n.strip()]
+    if 'file' in request.files and request.files['file'].filename != '':
+        file = request.files['file']
+        input_numbers = file.read().decode('utf-8').splitlines()
+        numbers_list = [float(n.strip()) for n in input_numbers if n.strip()]
+    else:
+        input_numbers = request.form['numbers']
+        numbers_list = [float(n.strip()) for n in input_numbers.split(',') if n.strip()]
 
     # Your existing logic
     differences = calculate_differences(numbers_list)
@@ -19,7 +24,7 @@ def result():
     degree = min(len(numbers_list) - 1, 5)  # Adjust the degree if necessary
     polynomial = fit_polynomial(numbers_list, degree)
 
-    output_str = f"Note: (You have entered {len(numbers_list)} comma separated numbers)\n\n"
+    output_str = f"Note: (You have entered {len(numbers_list)} numbers)\n\n"
     output_str += "Sequence of differences:\n"
     for diff in differences:
         output_str += " ".join(f"{d:+.2f}" for d in diff) + "\n"
